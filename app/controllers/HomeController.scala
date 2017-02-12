@@ -1,8 +1,14 @@
 package controllers
 
 import javax.inject._
+
+import persistence.MyDatabase
 import play.api._
 import play.api.mvc._
+
+import scala.concurrent.Await
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration._
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -18,7 +24,11 @@ class HomeController @Inject() extends Controller {
    * a path of `/`.
    */
   def index = Action {
-    Ok(views.html.index("Your new application is ready."))
+    Ok(views.html.index())
   }
 
+}
+
+object Demo {
+  Await.result(MyDatabase.autocreate.future(), 5.seconds)
 }

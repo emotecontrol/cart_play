@@ -10,6 +10,7 @@ libraryDependencies ++= Seq(
   jdbc,
   cache,
   ws,
+  "com.websudos" %% "phantom-dsl" % "1.28.16",
   "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
 )
 
