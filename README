@@ -1,49 +1,17 @@
-This is your new Play application
-=================================
+CHALLENGE PROJECT
+=================
 
-This file will be packaged with your application when using `activator dist`.
+This is a submission for the challenge project.  It presents a store that sells three really great foods.
 
-There are several demonstration files available in this template.
+It is built on Play with Cassandra persistence.
 
-Controllers
-===========
+Play will serve pages to 127.0.0.1:9000 when the app is running.
 
-- HomeController.scala:
+Cassandra will create a table in the "challenge" keyspace that can be populated by browsing to /init.
+Cassandra is controlled via the Phantom DSL for simplicity.
 
-  Shows how to handle simple HTTP requests.
+To start the app use `activator run`
 
-- AsyncController.scala:
+To start tests use `activator test`
 
-  Shows how to do asynchronous programming when handling a request.
-
-- CountController.scala:
-
-  Shows how to inject a component into a controller and use the component when
-  handling requests.
-
-Components
-==========
-
-- Module.scala:
-
-  Shows how to use Guice to bind all the components needed by your application.
-
-- Counter.scala:
-
-  An example of a component that contains state, in this case a simple counter.
-
-- ApplicationTimer.scala:
-
-  An example of a component that starts when the application starts and stops
-  when the application stops.
-
-Filters
-=======
-
-- Filters.scala:
-
-  Creates the list of HTTP filters used by your application.
-
-- ExampleFilter.scala
-
-  A simple filter that adds a header to every response.
+Enjoy!

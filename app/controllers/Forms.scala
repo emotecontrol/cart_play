@@ -7,8 +7,6 @@ import play.api.data.validation.Constraints._
 case class AddToCart(product: String, quantity: Int)
 
 object Forms {
-
-
   val addToCartForm = Form(
     mapping(
       "product" -> nonEmptyText,
