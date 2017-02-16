@@ -1,11 +1,41 @@
+@(cartList: Seq[persistence.CartEntry], prodList: Seq[persistence.Product])
+@import scala.math.BigDecimal
 <!DOCTYPE html>
 <html lang="en">
 <head>
     @bootstrap_header("Cart")
 </head>
 <body>
-<h1>Hello, world!</h1>
-
+@navbar("cart", cartList.size)
+<h1>Your Order</h1>
+<form action="@routes.HomeController.update" method="post" name="update">
+<table class="table">
+<thead>
+    <tr>
+        <th>Items</th><th>Quantity</th><th>Total Price</th>
+    </tr>
+</thead>
+    @for(cartItem <- cartList) {
+        @defining(prodList.find(prod => prod.name == cartItem.productName).get) { product =>
+            <tr>
+                <td>@cartItem.productName</td>
+                <td><input type="number" name="quantity-@cartItem.productName" value="@cartItem.count" max="999" min="0"</td>
+                <td>$@{BigDecimal(product.price * cartItem.count).setScale(2, BigDecimal.RoundingMode.HALF_UP).toString}</td>
+            </tr>
+        }
+    }
+    @defining(cartList.map(cart =>(prodList.find(prod => prod.name == cart.productName).get.price * cart.count)).foldLeft(0d)(_+_)){ total =>
+    <tr>
+        <td></td>
+        <td></td>
+        <td><h2>Total: $@{BigDecimal(total).setScale(2, BigDecimal.RoundingMode.HALF_UP).toString}</h2></td>
+    </tr>
+    }
+</table>
+    <a class="btn btn-primary" @if(cartList.isEmpty){disabled="disabled"}else{} href="@routes.HomeController.checkout" role="button">Confirm Purchase</a>
+    @if(cartList.nonEmpty){<input type="submit" value="Update cart" class="btn btn-default" role="button">}else{}
+    <a class="btn btn-default" href="@routes.HomeController.store" role="button">Back to Shop</a>
+</form>
 @bootstrap_footer()
 </body>
 </html>

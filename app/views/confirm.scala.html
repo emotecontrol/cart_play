@@ -1,0 +1,37 @@
+@(cartList: Seq[persistence.CartEntry], prodList: Seq[persistence.Product])
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    @bootstrap_header("Confirm")
+</head>
+<body>
+@navbar("", 0)
+<h1>Order Summary</h1>
+<table class = "table">
+    <thead>
+    <tr>
+        <th>Items</th><th>Quantity</th><th>Total Price</th>
+    </tr>
+    </thead>
+    @for(cartItem <- cartList) {
+        @defining(prodList.find(prod => prod.name == cartItem.productName).get) { product =>
+        <tr>
+            <td>@cartItem.productName</td>
+            <td>@cartItem.count</td>
+            <td>$@{BigDecimal(product.price * cartItem.count).setScale(2, BigDecimal.RoundingMode.HALF_UP).toString}</td>
+        </tr>
+        }
+    }
+    @defining(cartList.map(cart =>(prodList.find(prod => prod.name == cart.productName).get.price * cart.count)).foldLeft(0d)(_+_)){ total =>
+        <tr>
+            <td></td>
+            <td></td>
+            <td><h2>Total: $@{BigDecimal(total).setScale(2, BigDecimal.RoundingMode.HALF_UP).toString}</h2></td>
+        </tr>
+    }
+</table>
+<h2>Thank you from Foody's!</h2>
+<a class="btn btn-default" href="@routes.HomeController.store" role="button">Return to Store</a>
+@bootstrap_footer()
+</body>
+</html>

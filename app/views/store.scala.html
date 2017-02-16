@@ -1,11 +1,22 @@
+@(addForm: Form[controllers.AddToCart])(prodList: Seq[persistence.Product], cartSize: Int)(implicit messages: Messages)
 <!DOCTYPE html>
 <html lang="en">
 <head>
     @bootstrap_header("Store")
 </head>
 <body>
-<h1>Hello, world! </h1>
 
+@navbar("store", cartSize)
+<h1>The Food Store</h1>
+<div class="row">
+
+        @for(p <- prodList) {
+            <div class="col-sm-6 col-md-4">
+            @product_panel(addForm)(p)
+            </div>
+        }
+
+</div>
 @bootstrap_footer()
 </body>
 </html>
